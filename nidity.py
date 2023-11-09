@@ -40,7 +40,7 @@ def calculate_nidity(file):
     # Reference image transformed to gray scale
     REF_FILE = file
 
-    # Imagen de referencia en escala de grises
+    # Reference image to gray spectre
     REF_IMG_GS = cv.imread(REF_FILE, cv.IMREAD_GRAYSCALE)
 
     # Height 480
@@ -221,14 +221,10 @@ def calculate_nidity(file):
     # plt.title('Modulation Transfer Function (MTF)')
     # plt.legend()
 
-    # Encuentra el índice más cercano en el que la magnitud es 0.5
+    # Find the closest index at which the magnitude is 0.5
     index_of_05 = np.argmin(np.abs(positive_magnitude - 0.5))
 
-    # Obtiene el valor de x correspondiente al índice donde la magnitud es 0.5
+    # Gets the value of x corresponding to the index where the magnitude is 0.5
     x_value_at_05 = positive_spatial_frequency[index_of_05]
 
     return x_value_at_05
-
-    # print(f"El valor de x cuando la magnitud es 0.5 en la función MTF es: {x_value_at_05}")
-
-    # plt.show()
