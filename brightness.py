@@ -10,8 +10,8 @@ def nearest_point_center(borders, center):
 def get_brightness(image, point):
     
     pixel_brightness = []
-    for y in range(point[1]-25,point[1]+26):
-        for x in range(point[0]-25,point[0]+26):
+    for y in range(point[1]-50,point[1]+50):
+        for x in range(point[0]-50,point[0]+50):
             pixel_brightness.append(image[y][x])
 
     return max(pixel_brightness)

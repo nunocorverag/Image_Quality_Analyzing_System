@@ -64,17 +64,17 @@ def get_square_data(image):
         borders.append(check_point2)
         direction = -1
 
-    for i in borders:
-        cv.line(CV_IMAGE, i, i, (255,255,255), 6)
-        cv.putText(CV_IMAGE, str(borders.index(i)), i, cv.FONT_HERSHEY_SIMPLEX , 0.5, (255, 255, 255), 2)
+    ##for i in borders:
+    ##    cv.line(CV_IMAGE, i, i, (255,255,255), 6)
+    ##    cv.putText(CV_IMAGE, str(borders.index(i)), i, cv.FONT_HERSHEY_SIMPLEX , 0.5, (255, 255, 255), 2)
 
     CENTER = (borders[0][0] + int(abs(borders[3][1] - borders[0][1])/2), borders[0][1] - int(abs(borders[3][0] - borders[2][0])/2))
 
-    print('borders: ', borders, 'CENTER: ', CENTER)
+    ##print('borders: ', borders, 'CENTER: ', CENTER)
 
-    cv.putText(CV_IMAGE, 'CENTER', CENTER, cv.FONT_HERSHEY_SIMPLEX , 0.5, (255, 255, 255), 2)
+    ##cv.putText(CV_IMAGE, 'CENTER', CENTER, cv.FONT_HERSHEY_SIMPLEX , 0.5, (255, 255, 255), 2)
 
-    cv.line(CV_IMAGE, CENTER, CENTER, (255,255,255), 6)
+    ##cv.line(CV_IMAGE, CENTER, CENTER, (255,255,255), 6)
 
     return (CV_IMAGE, borders, CENTER, (HALF_LENGHT, HALF_HEIGHT))
 
