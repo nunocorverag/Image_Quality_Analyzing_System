@@ -25,12 +25,9 @@ def Orientation(original_image):
     aoi_orientation=original_image[YCOORD_ORIENTATION:YCOORD_ORIENTATION+30,XCOORD_ORIENTATION:XCOORD_ORIENTATION+30] #Creating an AOI that contains
     #The border of the image to indicate orientation
 
-    #Show images for testing
-    cv.imshow('test1',aoi_orientation) #Showing the image of the AOI used for orientation
-
     orientation_value=aoi_orientation[10,10] #Obtaining the color of the orientation image to be certain whether it is
     #correctly orientated
-    if orientation_value<20: #Checks whether the black square indicating orientation is there or not by checking if the pixels are
+    if orientation_value<90: #Checks whether the black square indicating orientation is there or not by checking if the pixels are
     #black
         correct_orientation=True #If the image is black, it return True, so that if the black square is correctly posicionated
         #The correct_orientation is true
@@ -45,8 +42,6 @@ def Centered(original_image):
     aoi=original_image[YCOORDMIN:YCOORDMAX,XCOORDMIN:XCOORDMAX] #Creating an AOI (area of interest) with a more centered image in order to analize
     #less amount of pixels
 
-    #Show images for testing
-    cv.imshow('test',aoi) #Showing the image of the AOI
     _, threshold=cv.threshold(aoi,20,250,cv.THRESH_BINARY)#creating a threshold that reduces the amount of colored pixels so that only
     #the black ones stay with their original color
     contours, _ = cv.findContours(threshold, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE) #Creating contours of the figures
@@ -71,7 +66,7 @@ def Centered(original_image):
     difference_in_x=(x-STANDARDCENTERX)
     difference_in_y=(y-STANDARDCENTERY)
 
-    return correct_centered, difference_in_x, difference_in_y
+    return correct_centered, difference_in_x, difference_in_y,x,y
 
 #----------------------------------------------------Code------------------------------------------------------------
 
@@ -82,10 +77,12 @@ def main (image):
 
     #Observación de Resultados
     print("Centered?") #Separates the results from the centered
-    correct_centered, difference_in_x, difference_in_y = Centered(img) #
+    correct_centered, difference_in_x, difference_in_y,x,y = Centered(img) #
     print(difference_in_x,difference_in_y)
+    total_difference=pow((pow(difference_in_x,2)+pow(difference_in_y,2)),0.5)
+    print(f'x,y is {x,y}')
 
 
     print("Orientation?")
     correct_orientation=Orientation(img)
-    return correct_orientation, correct_centered
+    return correct_orientation, correct_centered, total_difference

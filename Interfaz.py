@@ -6,6 +6,7 @@ import main
 import cv2 as cv
 import luma
 import brightness
+import nidity
 from PIL import ImageTk, Image
 window = tkinter.Tk()
 window.geometry("920x650")
@@ -30,23 +31,20 @@ def uploadFiles():
     ilusion(file_new)
 
 def ilusion(file_new):
-    window.destroy()
-    tkinter.Button(window, text= "Close the Window", font=("Calibri",14,"bold"), command=close).pack(pady=20)
-
-    correct_orientation, correct_centered=main.main(file_new)
+    correct_orientation, correct_centered, total_difference=main.main(file_new)
     print("AJSDKASJDNMASKDJNASMDJ")
     image = Image.open(file_new)
     img= image.resize((240,320))
     photo = ImageTk.PhotoImage(img)
     if correct_orientation==True:
-        correct_orientation="Yes"
+        checked_orientation="Yes"
     else:
-        correct_orientation="No"
+        checked_orientation="No"
 
     if correct_centered==True:
-        correct_centered="Yes"
+        checked_centered="Yes"
     else:
-        correct_centered="No"
+        checked_centered="No"
     # Label widget to display the image
     color_image = cv.imread(file_new, cv.IMREAD_COLOR)
     square_data = luma.get_square_data(file_new)
@@ -58,14 +56,25 @@ def ilusion(file_new):
         check_brightness="Yes"
     else:
         check_brightness="No"
+    sharpness_value=nidity.calculate_nidity(file_new)
+    print(sharpness_value)
+    if(sharpness_value>=0.15):
+        sharpness_checked="Yes"
+    else:
+        sharpness_checked="No"
+    
+    total_difference=int(total_difference)
+
     label = tkinter.Label(window, image=photo,width=240, height=320)
     label.pack()
-    label_orientation = tkinter.Label(window, text = f'Does it pass the orientation test? {correct_orientation}', font="Helvetica 12")
+    label_orientation = tkinter.Label(window, text = f'Does it pass the orientation test? {checked_orientation}, by {correct_orientation}', font="Helvetica 12")
     label_orientation.pack()
-    label_brightness = tkinter.Label(window, text = f'Does it pass the brightness test? {check_brightness}', font="Helvetica 12")
+    label_brightness = tkinter.Label(window, text = f'Does it pass the brightness test? {check_brightness}, by red: {red}, green: {green}, blue: {blue}', font="Helvetica 12")
     label_brightness.pack()
-    label_centered = tkinter.Label(window, text = f'Does it pass the centerness test? {correct_centered}', font="Helvetica 12")
+    label_centered = tkinter.Label(window, text = f'Does it pass the centerness test? {correct_centered}, by {total_difference} pixels', font="Helvetica 12")
     label_centered.pack()
+    label_sharpness = tkinter.Label(window, text = f'Does it pass the sharpness test? {sharpness_checked}, by {sharpness_value}', font="Helvetica 12")
+    label_sharpness.pack()
     window.mainloop()
 
 
