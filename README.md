@@ -22,3 +22,5 @@ math
 scipy
 
 The app can only run one image at a time, to put another one, you must close the app and run it again. (beta)
+
+Click on run in the main.py file to initialize the app
