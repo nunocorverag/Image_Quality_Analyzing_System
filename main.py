@@ -1,5 +1,6 @@
 import cv2 as cv
 import matplotlib.pyplot as plt
+import math
 
 # Referencia del archivo
 REF_FILE = "IMG/REF_23.PNG"
@@ -30,6 +31,8 @@ _, thresh = cv.threshold(aoi, 20, 255, cv.THRESH_BINARY_INV)
 # Encontrar los contornos externos
 contours, _ = cv.findContours(thresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
 
+ref_with_contours = cv.cvtColor(REF_IMG_GS, cv.COLOR_GRAY2BGR)
+
 # Ajustar las coordenadas del contorno al área de interés original
 max_x = None
 max_y = None
@@ -59,8 +62,33 @@ for contour in contours:
             max_y = y
             max_y_tuple = (x,y)
 
+            
+for contour in contours:
+    for point in contour:
+        point[0][0] += X_MIN
+        point[0][1] += Y_MIN
+
+        x = point[0][0]
+        y = point[0][1]
+
+        if (x <= max_x_tuple[0] and x >= max_y_tuple[0]) and (y <= max_y_tuple[1]) and y >= max_x_tuple[1]:
+            #Draw point at 25 px
+            new_x1 = x + 25
+            new_x2 = x - 25
+            new_y1 = y + 25
+            new_y2 = y - 25
+
+            cv.line(ref_with_contours, (new_x1, y), (new_x2, y), (0, 255, 0), 2)
+            cv.line(ref_with_contours, (x, new_y1), (x, new_y2), (0, 255, 0), 2)
+            
+# Calcular el punto a mitad
+mid_x = (max_x_tuple[0] + max_y_tuple[0]) // 2
+mid_y = (max_x_tuple[1] + max_y_tuple[1]) // 2
+
+# Dibujar el punto a mitad
+plt.scatter(mid_x, mid_y, c='red', s=25)
+
 # Dibujar los contornos en una copia de la imagen original
-ref_with_contours = cv.cvtColor(REF_IMG_GS, cv.COLOR_GRAY2BGR)
 cv.drawContours(ref_with_contours, contours, -1, (0, 0, 255), 2)
 
 # Dibujar el cuadro azul alrededor del área de interés
