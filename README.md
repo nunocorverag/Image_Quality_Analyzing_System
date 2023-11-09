@@ -3,7 +3,7 @@
 
 Before running the app you must install the following libraries:
 
-os
+os /n
 tkinter
 shutil
 cv2
