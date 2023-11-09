@@ -1,10 +1,11 @@
+#Import some libraries in order to use them later
 import cv2 as cv
 import matplotlib.pyplot as plt
 import math
 import numpy as np
 from scipy.interpolate import UnivariateSpline
 
-
+#Extract the x and y values
 def plot_pixel_luminosity_function(arr_pix_func):
     """Plots the pixel luminosity function."""
     x_values = []
@@ -34,8 +35,9 @@ def calculate_esf(arr_pix_func):
 
     return esf
 
+ # File reference
 def calculate_nidity(file):
-    # Referencia del archivo
+    # Reference image transformed to gray scale
     REF_FILE = file
 
     # Imagen de referencia en escala de grises
@@ -52,18 +54,18 @@ def calculate_nidity(file):
     Y_MAX = 380
     #Area of interest
 
-    # Recorta la imagen a la región de interés
+    # Cut the image in the interest zone
     aoi = REF_IMG_GS[Y_MIN:Y_MAX, X_MIN:X_MAX]
 
-    # Umbralizar la imagen
+    # Cut the image in the interest zone
     _, thresh = cv.threshold(aoi, 20, 255, cv.THRESH_BINARY_INV)
 
-    # Encontrar los contornos externos
+    # Find the external contours
     contours, _ = cv.findContours(thresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
 
     ref_with_contours = cv.cvtColor(REF_IMG_GS, cv.COLOR_GRAY2BGR)
 
-    # Ajustar las coordenadas del contorno al área de interés original
+    # Adjust the coordinates of the contours area of original interest 
     max_x = None
     max_y = None
 
@@ -91,7 +93,7 @@ def calculate_nidity(file):
             if max_y <= y:
                 max_y = y
                 max_y_tuple = (x,y)
-    # Calcular el punto a mitad
+    # Calculate the middle point
     mid_x = (max_x_tuple[0] + max_y_tuple[0]) // 2
     mid_y = (max_x_tuple[1] + max_y_tuple[1]) // 2
 
@@ -118,12 +120,12 @@ def calculate_nidity(file):
     #Length to check in area x
     length_to_check = 25
 
-    # Imprimir los puntos de per_list_tuple que están 25 píxeles a la izquierda y derecha de la línea entre max_x_tuple y max_y_tuple, con la misma coordenada y
+    # Print the points from per_list_tuple, which are 25 pixels to the left and rigth from the line between max_x_tuple and max_y_tuple, using the same coordenate y
     for point in per_list_tuple:
         x = point[0]
         y = point[1]
         # print(f"Point: {point}")
-        # Dibujar un círculo en los puntos
+        # Draw the circle in the points
         right_paralel.append((x+length_to_check,y))
         left_paralel.append((x-length_to_check,y))
         cv.circle(ref_with_contours, (x + 100 ,y), 1, (0, 255, 255), -1)
