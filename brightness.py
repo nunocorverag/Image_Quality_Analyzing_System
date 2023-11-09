@@ -14,12 +14,9 @@ def get_brightness(image, point):
         for x in range(point[0]-25,point[0]+26):
             pixel_brightness.append(image[y][x])
 
-    print(max(pixel_brightness))
-    cv.line(image, (point[0]-25,point[1]-25), (point[0]+25,point[1]+25), (255,255,255), 6)
-    cv.imshow('IMAGE_QUALITY_ANALYZING_SYSTEM',image)
-    cv.waitKey(0)
+    return max(pixel_brightness)
             
 if __name__ == '__main__':
-    square_data = luma.get_square_data('IMG/REF_23.PNG')
+    square_data = luma.get_square_data('IMG/24.PNG')
     point_to_get_brightness = nearest_point_center(square_data[1], square_data[3])
-    get_brightness(square_data[0], point_to_get_brightness)
+    print(get_brightness(square_data[0], point_to_get_brightness))

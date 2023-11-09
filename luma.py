@@ -6,7 +6,7 @@ def search_border_x(image,dir,starting_point_x,starting_point_y, differential):
     i = starting_point_x
 
     for loop in range(2):
-        while abs(int(image[starting_point_y][i]) - last_i) < 15:
+        while abs(int(image[starting_point_y][i]) - last_i) < 50:
             last_i = image[starting_point_y][i]
             if loop == 0:
                 i += differential * dir
@@ -27,7 +27,7 @@ def search_border_y(image,dir,starting_point_x,starting_point_y, differential):
 
     for loop in range(2):
         
-        while abs(int(image[i][starting_point_x]) - last_i) < 15:
+        while abs(int(image[i][starting_point_x]) - last_i) < 50:
             last_i = image[i][starting_point_x]
             if loop == 0:
                 i += differential * dir
@@ -49,7 +49,7 @@ def get_square_data(image):
     LENGHT = int(DIMENSION[1])
     HALF_HEIGHT = int(HEIGHT / 2)
     HALF_LENGHT = int(LENGHT / 2)
-    DIFFERENTIAL = 12
+    DIFFERENTIAL = 10
 
     check_point = search_border_y(CV_IMAGE, -1, HALF_LENGHT, HALF_HEIGHT, DIFFERENTIAL)
     check_point2 = search_border_x(CV_IMAGE, -1, check_point[0], check_point[1], DIFFERENTIAL)
@@ -64,17 +64,17 @@ def get_square_data(image):
         borders.append(check_point2)
         direction = -1
 
-    ##for i in borders:
-    ##    cv.line(CV_IMAGE, i, i, (255,255,255), 6)
-    ##    cv.putText(CV_IMAGE, str(borders.index(i)), i, cv.FONT_HERSHEY_SIMPLEX , 0.5, (255, 255, 255), 2)
+    for i in borders:
+        cv.line(CV_IMAGE, i, i, (255,255,255), 6)
+        cv.putText(CV_IMAGE, str(borders.index(i)), i, cv.FONT_HERSHEY_SIMPLEX , 0.5, (255, 255, 255), 2)
 
     CENTER = (borders[0][0] + int(abs(borders[3][1] - borders[0][1])/2), borders[0][1] - int(abs(borders[3][0] - borders[2][0])/2))
 
-    ##print('borders: ', borders, 'CENTER: ', CENTER)
+    print('borders: ', borders, 'CENTER: ', CENTER)
 
-    ##cv.putText(CV_IMAGE, 'CENTER', CENTER, cv.FONT_HERSHEY_SIMPLEX , 0.5, (255, 255, 255), 2)
+    cv.putText(CV_IMAGE, 'CENTER', CENTER, cv.FONT_HERSHEY_SIMPLEX , 0.5, (255, 255, 255), 2)
 
-    ##cv.line(CV_IMAGE, CENTER, CENTER, (255,255,255), 6)
+    cv.line(CV_IMAGE, CENTER, CENTER, (255,255,255), 6)
 
     return (CV_IMAGE, borders, CENTER, (HALF_LENGHT, HALF_HEIGHT))
 
