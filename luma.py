@@ -6,7 +6,7 @@ def search_border_x(image,dir,starting_point_x,starting_point_y, differential):
     i = starting_point_x
 
     for loop in range(2):
-        while abs(int(image[starting_point_y][i]) - last_i) < 50:
+        while abs(int(image[starting_point_y][i]) - last_i) < 47:
             last_i = image[starting_point_y][i]
             if loop == 0:
                 i += differential * dir
