@@ -121,10 +121,10 @@ print(f"Middle rp: {middle_rp}")
 # right_paralel_upper_tuple = right_paralel[mid_x - 25]
 # right_paralel_lower_tuple = right_paralel[mid_x + 25]
 
-plt.scatter(up_rp[0], up_rp[1], c='green', s=25)
-plt.scatter(down_rp[0], down_rp[1], c='green', s=25)
-plt.scatter(up_lp[0], up_lp[1], c='green', s=25)
-plt.scatter(down_lp[0], down_lp[1], c='green', s=25)
+plt.scatter(up_rp[0], up_rp[1], c='yellow', s=25)
+plt.scatter(down_rp[0], down_rp[1], c='yellow', s=25)
+plt.scatter(up_lp[0], up_lp[1], c='yellow', s=25)
+plt.scatter(down_lp[0], down_lp[1], c='yellow', s=25)
 
 # Dibujar el punto a mitad
 plt.scatter(mid_x, mid_y, c='red', s=25)
