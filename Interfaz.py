@@ -12,10 +12,11 @@ button_upload_img= tkinter.Button(ventana, text ="Translada la imágen hacia la 
 cajaTexto = tkinter.Entry(ventana, font = "Helvetica 17")
 cajaTexto.pack()
 
-image_name = cajaTexto.get()
-print(image_name)
+def name_img():
+   image_name = cajaTexto.get()
+   print(image_name)
 
-button_name_img= tkinter.Button(ventana, text ="Ingresa el nombre", command = "name_img",bg= "skyblue")
+button_name_img= tkinter.Button(ventana, text ="Ingresa el nombre", command = name_img,bg= "skyblue")
 button_name_img.pack()
 
 ventana.mainloop()
