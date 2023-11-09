@@ -8,9 +8,6 @@ import matplotlib.pylab as plt
 
 reference_file = "IMG/REF_23.PNG"
 
-#Change to recieve an input
-file_to_analize = "IMG/REF_11.PNG"
-
 reference_img_normscale = cv.imread(reference_file)
 reference_img_grayscale = cv.imread(reference_file,cv.IMREAD_GRAYSCALE)
 
@@ -185,13 +182,13 @@ def calculate_nidity(file):
     x_values = esf_data[:, 0]
     y_values = esf_data[:, 1]
 
-    # plt.figure(figsize=(8, 6))
-    # plt.plot(x_values, y_values, label='ESF Function')
-    # plt.xlabel('Pixel Sequence Number')
-    # plt.ylabel('Pixel Luminosity')
-    # plt.title('Edge Spread Function (ESF)')
-    # plt.legend()
-    # plt.show()
+    plt.figure(figsize=(8, 6))
+    plt.plot(x_values, y_values, label='Función ESF')
+    plt.xlabel('Número de Secuencia de Píxeles')
+    plt.ylabel('Luminosidad del Píxel')
+    plt.title('Función de Difusión de Borde (ESF)')
+    plt.legend()
+    plt.show()
 
     # Use spline interpolation to get a function representing the ESF
     x = np.arange(len(esf_data))
@@ -232,64 +229,23 @@ def calculate_nidity(file):
     positive_spatial_frequency = spatial_frequency[positive_freq]
 
     # Plot the MTF function with positive spatial frequencies
-    # plt.figure(figsize=(8, 6))
-    # plt.plot(positive_spatial_frequency, positive_magnitude, label='MTF Function')
-    # plt.xlabel('Spatial Frequency')
-    # plt.ylabel('Normalized Magnitude')
-    # plt.title('Modulation Transfer Function (MTF)')
-    # plt.legend()
+    plt.figure(figsize=(8, 6))
+    plt.plot(positive_spatial_frequency, positive_magnitude, label='Función MTF')
+    plt.xlabel('Frecuencia Espacial')
+    plt.ylabel('Magnitud Normalizada')
+    plt.title('Función de Transferencia de Modulación (MTF)')
+    plt.legend()
 
     # Encuentra el índice más cercano en el que la magnitud es 0.5
     index_of_05 = np.argmin(np.abs(positive_magnitude - 0.5))
 
     # Obtiene el valor de x correspondiente al índice donde la magnitud es 0.5
     x_value_at_05 = positive_spatial_frequency[index_of_05]
+    plt.show()
 
     return x_value_at_05
 
     # print(f"El valor de x cuando la magnitud es 0.5 en la función MTF es: {x_value_at_05}")
 
-    # plt.show()
 
-print(calculate_nidity("IMG/36.PNG"))
-
-# Arr_2D = [[1,2,3,4],[1,2,3,4]]
-# print("Arreglo de 2 dimensiones",Arr_2D)
-# print("Fila de arreglo de 2 dimensiones",Arr_2D[0])
-# print("Elemento de arreglo de 2 dimensiones",Arr_2D[0][0])
-
-# Arr_3D = [[[1,2,3,4],[1,2,3,4]],[[1,2,3,4],[1,2,3,4]]]
-# print("Matriz de 3 dimensiones",Arr_3D)
-# print("Arreglo nxn de arreglo de 3 dimensiones",Arr_3D[0])
-# print("Fila de arreglo (n) de 3 dimensiones",Arr_3D[0][0])
-# print("Elemento de arreglo de 3 dimensiones",Arr_3D[0][0][0])
-
-#Para escala de color
-for i in range(0, 1):
-    fila = reference_img_normscale[0]
-    print(f"Fila: {fila}")
-    for j in range(0, 1):
-        pixel = fila[0]
-        print(f"Pixel: {pixel}")
-        for k in range(0, 3):
-            valor_RGB = pixel[i]            
-            if k == 0:
-                print(f"Value of red: {valor_RGB}")
-            if k == 1:
-                print(f"Value of green: {valor_RGB}")
-            if k == 2:
-                print(f"Value of blue: {valor_RGB}")
-            
-# print(len(reference_img_normscale))
-# print(len(reference_img_normscale[0]))
-# print(len(reference_img_normscale[0][0]))
-
-#Para escala de grises
-for i in range(0, 1):
-    fila = reference_img_grayscale[0]
-    print(f"Fila: {fila}")
-    for j in range(0, 1):
-        luminiscencia = fila[0]
-        print(f"Luminiscencia: {luminiscencia}")
-
-#Read the images
+print(calculate_nidity("IMG/REF_23.PNG"))
