@@ -14,6 +14,8 @@ File_Final_Name="placeholder"
 close_button=0
 
 def uploadFiles():
+    if (os.path.exists("./IMG/23.PNG")):
+        os.remove("./IMG/23.PNG")
     curr_directory="./IMG"
     file_path = filedialog.askopenfilename(initialdir=curr_directory, title="Select Image", filetypes=[('Image Files', '*.PNG')])
     shutil.copy(file_path,curr_directory)
@@ -28,6 +30,8 @@ def uploadFiles():
     ilusion(file_new)
 
 def ilusion(file_new):
+    window.destroy()
+    tkinter.Button(window, text= "Close the Window", font=("Calibri",14,"bold"), command=close).pack(pady=20)
 
     correct_orientation, correct_centered=main.main(file_new)
     print("AJSDKASJDNMASKDJNASMDJ")
