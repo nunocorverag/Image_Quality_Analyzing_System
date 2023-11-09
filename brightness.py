@@ -17,6 +17,7 @@ def get_brightness(image, point):
     return max(pixel_brightness)
             
 if __name__ == '__main__':
-    square_data = luma.get_square_data('IMG/24.PNG')
+    image_name = 'IMG/REF_23.PNG'
+    square_data = luma.get_square_data('IMG/REF_23.PNG')
     point_to_get_brightness = nearest_point_center(square_data[1], square_data[3])
     print(get_brightness(square_data[0], point_to_get_brightness))
