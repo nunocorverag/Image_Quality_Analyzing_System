@@ -126,6 +126,14 @@ plt.scatter(down_rp[0], down_rp[1], c='yellow', s=25)
 plt.scatter(up_lp[0], up_lp[1], c='yellow', s=25)
 plt.scatter(down_lp[0], down_lp[1], c='yellow', s=25)
 
+# Dibujar la línea entre up_rp y up_lp
+cv.line(ref_with_contours, (up_rp[0], up_rp[1]), (up_lp[0], up_lp[1]), (255, 255, 0), 2)
+cv.line(ref_with_contours, (down_rp[0], down_lp[1]), (down_lp[0], down_lp[1]), (255, 255, 0), 2)
+cv.line(ref_with_contours, (up_rp[0], up_rp[1]), (down_rp[0], down_rp[1]), (255, 255, 0), 2)
+cv.line(ref_with_contours, (up_lp[0], up_lp[1]), (down_lp[0], down_lp[1]), (255, 255, 0), 2)
+
+
+
 # Dibujar el punto a mitad
 plt.scatter(mid_x, mid_y, c='red', s=25)
 
