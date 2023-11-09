@@ -61,29 +61,70 @@ for contour in contours:
         if max_y <= y:
             max_y = y
             max_y_tuple = (x,y)
+# Calcular el punto a mitad
+mid_x = (max_x_tuple[0] + max_y_tuple[0]) // 2
+mid_y = (max_x_tuple[1] + max_y_tuple[1]) // 2
 
-            
+#Perpendicular list tuple
+per_list_tuple = []
+
 for contour in contours:
     for point in contour:
-        point[0][0] += X_MIN
-        point[0][1] += Y_MIN
 
         x = point[0][0]
         y = point[0][1]
 
-        if (x <= max_x_tuple[0] and x >= max_y_tuple[0]) and (y <= max_y_tuple[1]) and y >= max_x_tuple[1]:
-            #Draw point at 25 px
-            new_x1 = x + 25
-            new_x2 = x - 25
-            new_y1 = y + 25
-            new_y2 = y - 25
+        if x >= max_y_tuple[0] and x <= max_x_tuple[0] and y >= max_x_tuple[1]:
+            per_list_tuple.append((x,y))
 
-            cv.line(ref_with_contours, (new_x1, y), (new_x2, y), (0, 255, 0), 2)
-            cv.line(ref_with_contours, (x, new_y1), (x, new_y2), (0, 255, 0), 2)
-            
-# Calcular el punto a mitad
-mid_x = (max_x_tuple[0] + max_y_tuple[0]) // 2
-mid_y = (max_x_tuple[1] + max_y_tuple[1]) // 2
+# for x,y in per_list_tuple:
+#     print(f"X: {x}, Y: {y}")
+
+# print(f"Length of list: {len(per_list_tuple)}")
+
+right_paralel = []
+left_paralel = []
+
+# Imprimir los puntos de per_list_tuple que están 25 píxeles a la izquierda y derecha de la línea entre max_x_tuple y max_y_tuple, con la misma coordenada y
+for point in per_list_tuple:
+    x = point[0]
+    y = point[1]
+    # print(f"Point: {point}")
+    # Dibujar un círculo en los puntos
+    right_paralel.append((x+25,y))
+    left_paralel.append((x-25,y))
+    cv.circle(ref_with_contours, (x + 25 ,y), 1, (0, 255, 255), -1)
+    cv.circle(ref_with_contours, (x - 25 ,y), 1, (0, 255, 255), -1)
+
+#Length of paralels
+length_rp = len(right_paralel)
+mid_rp = length_rp//2-1
+middle_rp = right_paralel[mid_rp]
+up_rp = right_paralel[mid_rp-25]
+down_rp = right_paralel[mid_rp+25]
+
+length_lp = len(left_paralel)
+mid_lp = length_lp//2-1
+middle_lp = left_paralel[mid_lp]
+up_lp = left_paralel[mid_lp-25]
+down_lp = left_paralel[mid_lp+25]
+
+plt.scatter(middle_rp[0], middle_rp[1], c='grey', s=25)
+plt.scatter(middle_lp[0], middle_lp[1], c='grey', s=25)
+
+print(f"Middle line: {mid_x, mid_y}")
+print(f"Middle rp: {middle_rp}")
+
+# left_paralel_upper_tuple = right_paralel[mid_x - 25]
+# left_paralel_lower_tuple = right_paralel[mid_x + 25]
+
+# right_paralel_upper_tuple = right_paralel[mid_x - 25]
+# right_paralel_lower_tuple = right_paralel[mid_x + 25]
+
+plt.scatter(up_rp[0], up_rp[1], c='green', s=25)
+plt.scatter(down_rp[0], down_rp[1], c='green', s=25)
+plt.scatter(up_lp[0], up_lp[1], c='green', s=25)
+plt.scatter(down_lp[0], down_lp[1], c='green', s=25)
 
 # Dibujar el punto a mitad
 plt.scatter(mid_x, mid_y, c='red', s=25)
@@ -95,8 +136,8 @@ cv.drawContours(ref_with_contours, contours, -1, (0, 0, 255), 2)
 cv.rectangle(ref_with_contours, (X_MIN, Y_MIN), (X_MAX, Y_MAX), (255, 0, 0), 2)
 
 # Dibujar los puntos de interés
-print(f"Max x tuple coords: {max_x_tuple}")
-print(f"Max y tuple coords: {max_y_tuple}")
+# print(f"Max x tuple coords: {max_x_tuple}")
+# print(f"Max y tuple coords: {max_y_tuple}")
 plt.scatter(max_x_tuple[0], max_x_tuple[1], c='green', s=25)
 plt.scatter(max_y_tuple[0], max_y_tuple[1], c='green', s=25)
 
@@ -104,4 +145,8 @@ plt.scatter(max_y_tuple[0], max_y_tuple[1], c='green', s=25)
 # Trama de la imagen
 plt.imshow(ref_with_contours, cmap='gray')
 plt.title('Reference image in grey scale')
+# Dibujar las líneas offset
+
+offset = 25
+
 plt.show()
