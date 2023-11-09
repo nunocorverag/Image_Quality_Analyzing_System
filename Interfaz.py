@@ -1,6 +1,7 @@
 import os
 import tkinter
 from tkinter import filedialog
+import shutil
 ventana = tkinter.Tk()
 ventana.geometry("600x350")
 
@@ -24,26 +25,21 @@ def open_file():
     return name_image'''
 
 def uploadFiles():
-    curr_directory = os.getcwd()
-    curr_directory+="/IMG"
+    curr_directory="./IMG"
+    file_name="test"
     file_path = filedialog.askopenfilename(initialdir=curr_directory, title="Select Image", filetypes=[('Image Files', '*.jpg')])
-
-    file = open(file_path, 'r')
-
-    file1 = open(curr_directory, "w")
-    file1.write(file.read())
-    file.close()
-    file1.close()
+    shutil.copy(file_path,curr_directory)
+    
 
 def open_image():
     img = open_file() #Whatever the given image is
     save_path = "/IMG"
-    file_name = "test.jpg"
+    file_name = "test"
     complete_name = os.path.join(save_path, file_name)
     uploadFiles()
     print(img) 
 
-button_upload_img= tkinter.Button(ventana, text ="Translada la imágen hacia la capeta IMG, ubicada dentro de Image_Quality_Analyzing_System", command = uploadFiles(),bg= "yellow").pack()
+button_upload_img= tkinter.Button(ventana, text ="Upload", command = uploadFiles(),bg= "yellow").pack()
 
 #cajaTexto = tkinter.Entry(ventana, font = "Helvetica 17")
 #cajaTexto.pack()
