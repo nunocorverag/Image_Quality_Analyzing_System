@@ -15,8 +15,8 @@ File_Final_Name="placeholder"
 close_button=0
 
 def uploadFiles():
-    if (os.path.exists("./IMG/23.PNG")):
-        os.remove("./IMG/23.PNG")
+    if (os.path.exists("./IMG/1.PNG")):
+        os.remove("./IMG/1.PNG")
     curr_directory="./IMG"
     file_path = filedialog.askopenfilename(initialdir=curr_directory, title="Select Image", filetypes=[('Image Files', '*.PNG')])
     shutil.copy(file_path,curr_directory)
@@ -26,7 +26,7 @@ def uploadFiles():
     names[len(names)-1]=names[len(names)-1].replace(".PNG","")
     print(names)
     file_old= curr_directory+"/"+names[len(names)-1]+".PNG"
-    file_new= curr_directory+"/"+"23"+".PNG"
+    file_new= curr_directory+"/"+"1"+".PNG"
     os.rename(file_old, file_new)
     ilusion(file_new)
 
