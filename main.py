@@ -21,7 +21,7 @@ STANDARDCENTERY=144 #Coordinate of the center in Y
 
 #--------------------------------------------------------Functions-------------------------------------------------------------
 def Orientation(original_image):
-    aoi_orientation=img[YCOORD_ORIENTATION:YCOORD_ORIENTATION+30,XCOORD_ORIENTATION:XCOORD_ORIENTATION+30] #Creating an AOI that contains
+    aoi_orientation=original_image[YCOORD_ORIENTATION:YCOORD_ORIENTATION+30,XCOORD_ORIENTATION:XCOORD_ORIENTATION+30] #Creating an AOI that contains
     #The border of the image to indicate orientation
 
     #Show images for testing
@@ -75,24 +75,25 @@ def Centered(original_image):
 #----------------------------------------------------Code------------------------------------------------------------
 
 #Declaration of important variables as the images
-img_ori=cv.imread("IMG/REf_23.PNG",1) #Opening the image using openCV
-img = cv.cvtColor(img_ori, cv.COLOR_BGR2GRAY) #Transforming the image into gray scale
+def main (image):
+    img_ori=cv.imread(image,1) #Opening the image using openCV
+    img = cv.cvtColor(img_ori, cv.COLOR_BGR2GRAY) #Transforming the image into gray scale
 
-#Observación de Resultados
-print("Centered?") #Separates the results from the centered
-correct_centered, difference_in_x, difference_in_y = Centered(img) #
-print(difference_in_x,difference_in_y)
-print(correct_centered)
+    #Observación de Resultados
+    print("Centered?") #Separates the results from the centered
+    correct_centered, difference_in_x, difference_in_y = Centered(img) #
+    print(difference_in_x,difference_in_y)
+    print(correct_centered)
 
 
-print("Orientation?")
-correct_orientation=Orientation(img)
-print(correct_orientation)
+    print("Orientation?")
+    correct_orientation=Orientation(img)
+    print(correct_orientation)
 
-cv.imshow('adsad',img)
+    cv.imshow('adsad',img)
 
-plt.show()
-#plt.show()
+    plt.show()
+    #plt.show()
 
-cv.waitKey(0)
-cv.destroyAllWindows()
+    cv.waitKey(0)
+    cv.destroyAllWindows()
