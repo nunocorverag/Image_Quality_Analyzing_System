@@ -1,10 +1,11 @@
+# Import some libraries in order to use them later
 import cv2 as cv
 import matplotlib.pyplot as plt
 import math
 import numpy as np
 from scipy.interpolate import UnivariateSpline
 
-
+#Extract the x and y values
 def plot_pixel_luminosity_function(arr_pix_func):
     """Plots the pixel luminosity function."""
     x_values = []
@@ -34,10 +35,10 @@ def calculate_esf(arr_pix_func):
 
     return esf
 
-# Referencia del archivo
+# File reference
 REF_FILE = "IMG/1.PNG"
 
-# Imagen de referencia en escala de grises
+# Reference image transformed to gray scale
 REF_IMG_GS = cv.imread(REF_FILE, cv.IMREAD_GRAYSCALE)
 
 # Height 480
@@ -51,18 +52,18 @@ X_MAX = 500
 Y_MAX = 380
 #Area of interest
 
-# Recorta la imagen a la región de interés
+# Cut the image in the interest zone
 aoi = REF_IMG_GS[Y_MIN:Y_MAX, X_MIN:X_MAX]
 
-# Umbralizar la imagen
+# Threshold the image
 _, thresh = cv.threshold(aoi, 20, 255, cv.THRESH_BINARY_INV)
 
-# Encontrar los contornos externos
+# Find the external contours
 contours, _ = cv.findContours(thresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
 
 ref_with_contours = cv.cvtColor(REF_IMG_GS, cv.COLOR_GRAY2BGR)
 
-# Ajustar las coordenadas del contorno al área de interés original
+# Adjust the coordinates of the contours area of original interest 
 max_x = None
 max_y = None
 
@@ -90,7 +91,7 @@ for contour in contours:
         if max_y <= y:
             max_y = y
             max_y_tuple = (x,y)
-# Calcular el punto a mitad
+# Calculate the middle point
 mid_x = (max_x_tuple[0] + max_y_tuple[0]) // 2
 mid_y = (max_x_tuple[1] + max_y_tuple[1]) // 2
 
@@ -117,12 +118,12 @@ left_paralel = []
 #Length to check in area x
 length_to_check = 25
 
-# Imprimir los puntos de per_list_tuple que están 25 píxeles a la izquierda y derecha de la línea entre max_x_tuple y max_y_tuple, con la misma coordenada y
+# Print the points from per_list_tuple, which are 25 pixels to the left and rigth from the line between max_x_tuple and max_y_tuple, using the same coordenate y
 for point in per_list_tuple:
     x = point[0]
     y = point[1]
     # print(f"Point: {point}")
-    # Dibujar un círculo en los puntos
+    # Draw the circle in the points
     right_paralel.append((x+length_to_check,y))
     left_paralel.append((x-length_to_check,y))
     cv.circle(ref_with_contours, (x + 100 ,y), 1, (0, 255, 255), -1)
@@ -189,50 +190,3 @@ plt.xlabel("Spatial Frequency")
 plt.ylabel("Magnitude")
 plt.title("MTF Curve")
 plt.show()
-
-
-# plt.scatter(middle_rp[0], middle_rp[1], c='grey', s=25)
-# plt.scatter(middle_lp[0], middle_lp[1], c='grey', s=25)
-
-# # left_paralel_upper_tuple = right_paralel[mid_x - 25]
-# # left_paralel_lower_tuple = right_paralel[mid_x + 25]
-
-# # right_paralel_upper_tuple = right_paralel[mid_x - 25]
-# # right_paralel_lower_tuple = right_paralel[mid_x + 25]
-
-# plt.scatter(up_rp[0], up_rp[1], c='yellow', s=25)
-# plt.scatter(down_rp[0], down_rp[1], c='yellow', s=25)
-# plt.scatter(up_lp[0], up_lp[1], c='yellow', s=25)
-# plt.scatter(down_lp[0], down_lp[1], c='yellow', s=25)
-
-# # Dibujar la línea entre up_rp y up_lp
-# cv.line(ref_with_contours, (up_rp[0], up_rp[1]), (up_lp[0], up_lp[1]), (255, 255, 0), 2)
-# cv.line(ref_with_contours, (down_rp[0], down_lp[1]), (down_lp[0], down_lp[1]), (255, 255, 0), 2)
-
-# #Dibujar la linea roja
-# cv.line(ref_with_contours, (middle_rp[0], middle_rp[1]), (middle_lp[0], middle_lp[1]), (255, 0, 0), 2)
-
-# # Dibujar el punto a mitad
-# plt.scatter(mid_x, mid_y, c='red', s=25)
-
-# # Dibujar los contornos en una copia de la imagen original
-# cv.drawContours(ref_with_contours, contours, -1, (0, 0, 255), 2)
-
-# # Dibujar el cuadro azul alrededor del área de interés
-# cv.rectangle(ref_with_contours, (X_MIN, Y_MIN), (X_MAX, Y_MAX), (255, 0, 0), 2)
-
-# # Dibujar los puntos de interés
-# # print(f"Max x tuple coords: {max_x_tuple}")
-# # print(f"Max y tuple coords: {max_y_tuple}")
-# plt.scatter(max_x_tuple[0], max_x_tuple[1], c='green', s=25)
-# plt.scatter(max_y_tuple[0], max_y_tuple[1], c='green', s=25)
-
-# ##GRAFICAR ------------------------------------------------------------
-# # Trama de la imagen
-# plt.imshow(ref_with_contours, cmap='gray')
-# plt.title('Reference image in grey scale')
-# # Dibujar las líneas offset
-
-# offset = 25
-
-# # plt.show()
