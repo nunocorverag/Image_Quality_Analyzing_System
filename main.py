@@ -3,6 +3,7 @@
 import cv2 as cv #Importing openCV as cv
 import matplotlib.pylab as plt #Importing matplotlyb.pylab as plt
 import numpy as np #Importing numpy as np
+import brightness
 
 #Constant Declarations:
 #Coordinates to determine the size of the image created for evaluating the orientation
@@ -83,17 +84,8 @@ def main (image):
     print("Centered?") #Separates the results from the centered
     correct_centered, difference_in_x, difference_in_y = Centered(img) #
     print(difference_in_x,difference_in_y)
-    print(correct_centered)
 
 
     print("Orientation?")
     correct_orientation=Orientation(img)
-    print(correct_orientation)
-
-    cv.imshow('adsad',img)
-
-    plt.show()
-    #plt.show()
-
-    cv.waitKey(0)
-    cv.destroyAllWindows()
+    return correct_orientation, correct_centered
